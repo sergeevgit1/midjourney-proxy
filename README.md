@@ -34,12 +34,12 @@
 ## Развертывание на платформе Railway
 Развертывание на основе платформы Railway не требует собственного сервера: Инструкция по развертыванию; если невозможно использовать Railway, можно воспользоваться развертыванием на платформе Zeabur, указанном ниже.
 
-## Zeabur 部署
-基于Zeabur平台部署，不需要自己的服务器: [部署方式](./docs/zeabur-start.md)
+## Развертывание на платформе Zeabur
+Развертывание на основе платформы Zeabur не требует собственного сервера: Инструкция по развертыванию
 
-## Docker 部署
-1. /xxx/xxx/config目录下创建 application.yml(mj配置项)、banned-words.txt(可选，覆盖默认的敏感词文件)；参考src/main/resources下的文件
-2. 启动容器，映射config目录
+## Развертывание с использованием Docker
+1. В директории /xxx/xxx/config создайте файлы application.yml (настройки mj) и banned-words.txt (опционально, для замены стандартного файла с запрещенными словами); см. файлы в директории src/main/resources в качестве примера.
+2. Запустите контейнер, смонтировав директорию config:
 ```shell
 docker run -d --name midjourney-proxy \
  -p 8080:8080 \
@@ -47,9 +47,9 @@ docker run -d --name midjourney-proxy \
  --restart=always \
  novicezk/midjourney-proxy:2.3.3
 ```
-3. 访问 `http://ip:port/mj` 查看API文档
+3. Откройте `http://ip:port/mj`, чтобы просмотреть документацию по API.
 
-附: 不映射config目录方式，直接在启动命令中设置参数
+Примечание: Если не хотите монтировать директорию config, можно указать параметры прямо в команде запуска контейнера:
 ```shell
 docker run -d --name midjourney-proxy \
  -p 8080:8080 \
@@ -59,44 +59,44 @@ docker run -d --name midjourney-proxy \
  --restart=always \
  novicezk/midjourney-proxy:2.3.3
 ```
-## 配置项
-- mj.discord.guild-id：discord服务器ID
-- mj.discord.channel-id：discord频道ID
-- mj.discord.user-token：discord用户Token
-- mj.discord.session-id：discord用户的sessionId，不设置时使用默认的，建议从interactions请求中复制替换掉
-- mj.discord.user-agent：调用discord接口、连接wss时的user-agent，默认使用作者的，建议从浏览器network复制替换掉
-- mj.discord.user-wss：是否使用user-token连接wss，默认true
-- mj.discord.bot-token：自定义机器人Token，user-wss=false时必填
-- 更多配置查看 [Wiki / 配置项](https://github.com/novicezk/midjourney-proxy/wiki/%E9%85%8D%E7%BD%AE%E9%A1%B9)
 
-## Wiki链接
-1. [Wiki / API接口说明](https://github.com/novicezk/midjourney-proxy/wiki/API%E6%8E%A5%E5%8F%A3%E8%AF%B4%E6%98%8E)
-2. [Wiki / 任务变更回调](https://github.com/novicezk/midjourney-proxy/wiki/%E4%BB%BB%E5%8A%A1%E5%8F%98%E6%9B%B4%E5%9B%9E%E8%B0%83)
-2. [Wiki / 更新记录](https://github.com/novicezk/midjourney-proxy/wiki/%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95)
+## Настройки
+- mj.discord.guild-id: ID сервера Discord
+- mj.discord.channel-id: ID канала Discord
+- mj.discord.user-token: Токен пользователя Discord
+- mj.discord.session-id: Идентификатор сеанса пользователя Discord, если не указан, используется значение по умолчанию. Рекомендуется скопировать и заменить его из запроса interactions.
+- mj.discord.user-agent: User-Agent для вызова API Discord и подключения к wss. По умолчанию используется значение автора. Рекомендуется скопировать и заменить его из сетевых запросов браузера.
+- mj.discord.user-wss: Использовать ли user-token для подключения к wss. По умолчанию true.
+- mj.discord.bot-token: Пользовательский токен бота. Обязателен, если user-wss=false.
+- Дополнительные настройки см. в [Wiki / Настройки](https://github.com/novicezk/midjourney-proxy/wiki/Настройки)
 
-## 注意事项
-1. 常见问题及解决办法见 [Wiki / FAQ](https://github.com/novicezk/midjourney-proxy/wiki/FAQ) 
-2. 在 [Issues](https://github.com/novicezk/midjourney-proxy/issues) 中提出其他问题或建议
-3. 感兴趣的朋友也欢迎加入交流群讨论一下，扫码进群名额已满，加管理员微信邀请进群
+## Ссылки на Wiki:
+1. [Описание API-интерфейса](https://github.com/novicezk/midjourney-proxy/wiki/Описание-API-интерфейса)
+2. [Обратный вызов изменений задачи](https://github.com/novicezk/midjourney-proxy/wiki/Обратный-вызов-изменений-задачи)
+3. [История обновлений](https://github.com/novicezk/midjourney-proxy/wiki/История-обновлений)
 
+## Важно:
+1. Общие вопросы и решения проблем смотрите в [FAQ](https://github.com/novicezk/midjourney-proxy/wiki/FAQ).
+2. Задавайте другие вопросы или предложения в разделе [Issues](https://github.com/novicezk/midjourney-proxy/issues).
+3. Заинтересованные пользователи также могут присоединиться к группе обсуждения. Сканируйте QR-код, чтобы присоединиться к группе. Места в группе уже заняты, но вы можете запросить приглашение у администратора через WeChat.
  <img src="https://raw.githubusercontent.com/novicezk/midjourney-proxy/main/docs/manager-qrcode.png" width="320" alt="微信二维码"/>
 
-## 本地开发
-- 依赖java17和maven
-- 更改配置项: 修改src/main/application.yml
-- 项目运行: 启动ProxyApplication的main函数
-- 更改代码后，构建镜像: Dockerfile取消VOLUME的注释，执行 `docker build . -t midjourney-proxy`
+## Локальная разработка:
+- Зависимости: требуется Java 17 и Maven.
+- Изменение настроек: измените файл src/main/application.yml.
+- Запуск проекта: запустите функцию main в классе ProxyApplication.
+- После внесения изменений в код, создайте образ: раскомментируйте строку с VOLUME в Dockerfile и выполните команду `docker build . -t midjourney-proxy`.
 
-## 应用项目
-- [wechat-midjourney](https://github.com/novicezk/wechat-midjourney) : 代理微信客户端，接入MidJourney，仅示例应用场景，不再更新
-- [stable-diffusion-mobileui](https://github.com/yuanyuekeji/stable-diffusion-mobileui) : SDUI，基于本接口和SD，可一键打包生成H5和小程序
-- [ChatGPT-Midjourney](https://github.com/Licoy/ChatGPT-Midjourney) : 一键拥有你自己的 ChatGPT+Midjourney 网页服务
-- [MidJourney-Web](https://github.com/ConnectAI-E/MidJourney-Web) : 🍎 Supercharged Experience For MidJourney On Web UI
-- 依赖此项目且开源的，欢迎联系作者，加到此处展示
+## Приложения проекта:
+- [wechat-midjourney](https://github.com/novicezk/wechat-midjourney): Прокси-клиент для WeChat, интегрируется с MidJourney. Это пример использования и больше не обновляется.
+- [stable-diffusion-mobileui](https://github.com/yuanyuekeji/stable-diffusion-mobileui): SDUI - основан на этом API и SD, позволяет одним нажатием упаковать H5 и мини-приложения.
+- [ChatGPT-Midjourney](https://github.com/Licoy/ChatGPT-Midjourney): Создайте свой собственный веб-сервис ChatGPT+Midjourney всего в один клик.
+- [MidJourney-Web](https://github.com/ConnectAI-E/MidJourney-Web): 🍎 Наслаждайтесь улучшенным опытом MidJourney на веб-интерфейсе.
+- Если ваш проект зависит от данного и является открытым, свяжитесь с автором, чтобы добавить его сюда.
 
-## 其它
-如果觉得这个项目对你有所帮助，请帮忙点个star；也可以请作者喝杯茶～
+## Другое:
+Если этот проект был полезен для вас, пожалуйста, поставьте звезду (star); вы также можете угостить автора чашкой чая～
 
- <img src="https://raw.githubusercontent.com/novicezk/midjourney-proxy/main/docs/receipt-code.png" width="220" alt="二维码"/>
+ <img src="https://raw.githubusercontent.com/novicezk/midjourney-proxy/main/docs/receipt-code.png" width="220" alt="QR-код"/>
 
-![Star History Chart](https://api.star-history.com/svg?repos=novicezk/midjourney-proxy&type=Date)
+![График истории звезд](https://api.star-history.com/svg?repos=novicezk/midjourney-proxy&type=Date)
